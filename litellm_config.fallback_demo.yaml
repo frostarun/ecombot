@@ -1,0 +1,32 @@
+# eComBot fallback demo configuration.
+#
+# This intentionally breaks fast-faq's primary model so LiteLLM can prove that
+# fallback to deep-support is working. Use only for a controlled local check.
+
+model_list:
+  - model_name: fast-faq
+    litellm_params:
+      model: openrouter/google/bad-model-for-fallback-demo
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+      temperature: 0.2
+      timeout: 10
+
+  - model_name: deep-support
+    litellm_params:
+      model: openrouter/google/gemini-2.5-flash
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+      temperature: 0.2
+      timeout: 45
+
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 1
+  fallbacks:
+    - fast-faq:
+        - deep-support
+
+general_settings:
+  master_key: os.environ/LITELLM_PROXY_API_KEY
+  disable_spend_logs: true

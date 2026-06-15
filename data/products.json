@@ -1,0 +1,82 @@
+[
+  {
+    "product_id": "PRD-101",
+    "name": "Galaxy A55 5G",
+    "category": "phone",
+    "summary": "Mid-range Android phone with 5G, AMOLED display, and long battery life.",
+    "specs": {
+      "display": "6.6 inch FHD+ AMOLED, 120 Hz",
+      "storage": "128 GB internal storage",
+      "memory": "8 GB RAM",
+      "battery": "5000 mAh",
+      "camera": "50 MP main camera with optical image stabilization",
+      "connectivity": "5G, Wi-Fi, Bluetooth, USB-C"
+    },
+    "warranty": "1 year manufacturer warranty for device defects. Physical damage, liquid damage, and unauthorized repairs are excluded.",
+    "shipping": "Standard delivery usually takes 3 to 5 business days after dispatch. Express delivery is available in selected PIN codes.",
+    "returns": "Eligible for replacement within 7 days of delivery if the device is defective on arrival or the wrong item was delivered."
+  },
+  {
+    "product_id": "PRD-102",
+    "name": "Redmi Note 13 Pro",
+    "category": "phone",
+    "summary": "Value-focused Android phone with fast charging and high refresh display.",
+    "specs": {
+      "display": "6.67 inch AMOLED, 120 Hz",
+      "storage": "256 GB internal storage",
+      "memory": "8 GB RAM",
+      "battery": "5100 mAh",
+      "charging": "67 W fast charging",
+      "camera": "200 MP main camera"
+    },
+    "warranty": "1 year manufacturer warranty for handset defects and 6 months warranty for in-box accessories.",
+    "shipping": "Standard delivery usually takes 3 to 5 business days. Remote locations may take 6 to 8 business days.",
+    "returns": "Replacement is available within 7 days for dead-on-arrival, wrong item, or verified hardware defect."
+  },
+  {
+    "product_id": "PRD-103",
+    "name": "StreamMax 4K TV Decoder",
+    "category": "tv decoder",
+    "summary": "4K streaming decoder for smart TV and OTT apps.",
+    "specs": {
+      "resolution": "Up to 4K UHD",
+      "connectivity": "HDMI, Wi-Fi, Bluetooth",
+      "remote": "Voice-enabled Bluetooth remote",
+      "apps": "Supports major OTT streaming apps",
+      "power": "USB-C power adapter included"
+    },
+    "warranty": "6 months service warranty for decoder hardware defects. Remote batteries and accidental damage are excluded.",
+    "shipping": "Ships in protective packaging. Standard delivery usually takes 4 to 6 business days.",
+    "returns": "Replacement is available within 7 days if the decoder does not power on or the wrong model was delivered."
+  },
+  {
+    "product_id": "PRD-104",
+    "name": "BassPro Wireless Earbuds",
+    "category": "accessory",
+    "summary": "Bluetooth earbuds with charging case, touch controls, and noise reduction.",
+    "specs": {
+      "battery": "Up to 30 hours total playback with charging case",
+      "charging": "USB-C charging case",
+      "water_resistance": "IPX4 splash resistance",
+      "controls": "Touch controls for calls, music, and voice assistant",
+      "microphones": "Dual microphones with call noise reduction"
+    },
+    "warranty": "6 months accessory warranty for manufacturing defects. Ear tips, scratches, and water damage beyond splash resistance are excluded.",
+    "shipping": "Usually dispatched within 24 hours when in stock.",
+    "returns": "Replacement is available within 7 days for pairing failure, charging failure, or wrong item delivered."
+  },
+  {
+    "product_id": "PRD-105",
+    "name": "OldGen HDMI Adapter",
+    "category": "accessory",
+    "summary": "Legacy HDMI adapter retained for old TV and monitor compatibility.",
+    "specs": {
+      "ports": "HDMI input and legacy output connector",
+      "resolution": "Up to 1080p",
+      "power": "No external power required for supported devices"
+    },
+    "warranty": "No active warranty for inactive catalog items.",
+    "shipping": "This item is inactive and not available for new purchase.",
+    "returns": "Returns are not available for inactive items unless the order was placed before the item was removed from sale."
+  }
+]

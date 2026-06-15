@@ -1,0 +1,40 @@
+# eComBot LiteLLM proxy configuration.
+#
+# Start from the ecombot directory:
+#   litellm --config litellm_config.yaml --host 127.0.0.1 --port 4000
+#
+# Then set:
+#   LLM_GATEWAY_MODE=proxy
+#   LITELLM_PROXY_BASE_URL=http://127.0.0.1:4000
+#   LITELLM_PROXY_API_KEY=sk-ecombot-local
+
+model_list:
+  - model_name: fast-faq
+    litellm_params:
+      model: openrouter/google/gemini-2.5-flash
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+      temperature: 0.2
+      timeout: 30
+
+  - model_name: deep-support
+    litellm_params:
+      model: openrouter/google/gemini-2.5-flash
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+      temperature: 0.2
+      timeout: 45
+
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 1
+  timeout: 45
+  fallbacks:
+    - fast-faq:
+        - deep-support
+    - deep-support:
+        - fast-faq
+
+general_settings:
+  master_key: os.environ/LITELLM_PROXY_API_KEY
+  disable_spend_logs: true

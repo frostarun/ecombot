@@ -1,0 +1,40 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+
+# ADK and local vector/runtime state
+.adk/
+.chroma/
+
+# Python caches and build output
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Logs and local process output
+*.log
+*.out
+*.err
+mcp-http.*.log
+adk-web*.log
+
+# Local databases and temporary files
+*.db
+*.sqlite
+*.sqlite3
+.tmp/
+tmp/
+temp/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

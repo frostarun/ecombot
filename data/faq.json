@@ -1,0 +1,62 @@
+[
+  {
+    "id": "shipping-standard",
+    "category": "shipping",
+    "question": "How long does standard delivery take?",
+    "answer": "Standard delivery usually takes 3 to 5 business days after dispatch for most metro and tier-1 locations. Remote locations may take 6 to 8 business days."
+  },
+  {
+    "id": "shipping-express",
+    "category": "shipping",
+    "question": "Is express delivery available?",
+    "answer": "Express delivery is available only for selected PIN codes and in-stock items. The checkout page shows express eligibility before payment."
+  },
+  {
+    "id": "return-window",
+    "category": "returns",
+    "question": "What is the return or replacement window?",
+    "answer": "Most electronics are eligible for replacement within 7 days of delivery when the wrong item was delivered, the item is dead on arrival, or a verified hardware defect is found."
+  },
+  {
+    "id": "return-open-box",
+    "category": "returns",
+    "question": "Can I return an opened product because I changed my mind?",
+    "answer": "Opened electronics are not eligible for return for buyer's remorse. Replacement may still be available if the item has a verified defect within the replacement window."
+  },
+  {
+    "id": "warranty-coverage",
+    "category": "warranty",
+    "question": "What does the warranty cover?",
+    "answer": "Warranty coverage is provided by the product manufacturer and generally covers manufacturing defects. It does not cover physical damage, liquid damage, normal wear, or unauthorized repairs."
+  },
+  {
+    "id": "warranty-claim",
+    "category": "warranty",
+    "question": "How do I claim warranty?",
+    "answer": "To claim warranty, keep the invoice and contact support with the order ID, product name, purchase date, and issue description. Support can guide you to the brand service process."
+  },
+  {
+    "id": "payment-methods",
+    "category": "payments",
+    "question": "Which payment methods are supported?",
+    "answer": "The store supports UPI, major credit and debit cards, net banking, and selected wallet payments. Cash on delivery may be unavailable for high-value electronics."
+  },
+  {
+    "id": "refund-timeline",
+    "category": "refunds",
+    "question": "How long do refunds take?",
+    "answer": "Approved refunds are usually initiated within 2 business days after return validation. Bank or card processing can take 5 to 7 additional business days."
+  },
+  {
+    "id": "order-cancellation",
+    "category": "orders",
+    "question": "Can I cancel my order?",
+    "answer": "Orders can usually be cancelled before they are delivered. Delivered orders cannot be cancelled and may only be eligible for replacement if the return policy conditions are met."
+  },
+  {
+    "id": "data-privacy",
+    "category": "account",
+    "question": "What customer data does support need?",
+    "answer": "Support should ask only for the minimum details needed: order ID, product name, purchase date, issue description, and contact preference. Do not share card numbers, OTPs, or passwords."
+  }
+]
