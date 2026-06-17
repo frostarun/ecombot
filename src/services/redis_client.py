@@ -1,4 +1,4 @@
-"""Redis cache helpers for eComBot.
+"""Redis cache helpers for eComBot Day 04.
 
 Redis stores short-lived working-memory snapshots and latest-session pointers.
 It is not the durable business record; PostgreSQL owns durable history/data.

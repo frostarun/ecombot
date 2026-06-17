@@ -1,4 +1,4 @@
-"""PostgreSQL-backed order tools for eComBot."""
+"""PostgreSQL-backed order tools for eComBot Day 04."""
 
 import logging
 import re

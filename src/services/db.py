@@ -1,4 +1,4 @@
-"""PostgreSQL access layer for eComBot.
+"""PostgreSQL access layer for eComBot Day 04.
 
 The rest of the application uses this module instead of importing a database
 driver directly. Keep driver details here so tools can stay focused on business

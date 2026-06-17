@@ -2,7 +2,7 @@
 
 eComBot is an ADK-based electronics support assistant. It combines:
 
-- ADK `LlmAgent` orchestration with Support and Sales specialist agents.
+- ADK `LlmAgent` support flows.
 - PostgreSQL-backed order and product tools.
 - Redis session snapshots and optional Redis-backed ADK sessions.
 - ChromaDB retrieval over product, FAQ, and PDF knowledge.
@@ -13,7 +13,6 @@ The runtime entrypoints are:
 
 - `agent.py` for ADK Web.
 - `runner.py` for local scripted, REPL, retrieval, route, and tool-trace checks.
-- `src/ui/chainlit_app.py` for the Chainlit browser UI.
 
 ## Setup
 
@@ -48,20 +47,15 @@ python -m src.rag.embed_catalog
 
 ```text
 User prompt
-  -> runner.py, ADK Web, or Chainlit UI
-  -> route classifier chooses a model route: fast-faq or deep-support
-  -> orchestrator_agent receives the user request
-  -> orchestrator either:
-       - answers simple capability questions directly
-       - delegates support work to support_agent
-       - delegates sales/product work to sales_agent
-       - runs support_agent first, then sales_agent for mixed requests
-  -> specialists build dynamic instructions with ChromaDB context
-  -> specialists use the tools they own:
-       - support_agent: order, cancellation, product, customer, MCP backend tools
-       - sales_agent: product lookup and MCP inventory tools
-  -> orchestrator combines specialist replies when needed
-  -> runner or Chainlit stores durable history and Redis snapshots when configured
+  -> runner.py or ADK Web
+  -> route classifier chooses fast-faq or deep-support
+  -> support_agent builds dynamic instruction
+  -> retriever injects ChromaDB knowledge context
+  -> ADK tools are available:
+       - PostgreSQL order/product tools
+       - FastMCP order/inventory tools
+  -> model answers using tool output and retrieved evidence
+  -> runner stores durable history and Redis snapshots when configured
 ```
 
 ## Common Commands
@@ -104,20 +98,6 @@ Trace tool calls:
 python runner.py --trace-tools --route auto "Where is my order ORD-001?"
 ```
 
-Run multi-agent orchestration checks. For the full stock/variant trace, start
-the FastMCP backend first. For an orchestration-only check without external MCP
-tools, set `ECOMBOT_ENABLE_MCP_TOOLS=false`.
-
-```powershell
-python runner.py --multi-agent-scenario
-```
-
-Trace a mixed support plus sales request:
-
-```powershell
-python runner.py --trace-tools --route auto "My phone order ORD-001 was delayed. Check the order status and suggest an alternative phone that is currently in stock."
-```
-
 Start an interactive REPL:
 
 ```powershell
@@ -130,43 +110,6 @@ Run ADK Web from the parent folder:
 cd ..
 adk web ecombot
 ```
-
-## Chainlit UI
-
-Chainlit is the generative UI layer. It reuses the same Orchestrator backend
-and adds visible steps, structured cards, action buttons, and UI session state.
-
-Chainlit currently supports Python `>=3.10,<3.14`. The repo Python `3.14`
-venv can run the backend, but Chainlit needs a Python `3.10`, `3.11`, `3.12`,
-or `3.13` environment.
-
-Run from `lab/demo/arun/ecombot`:
-
-```powershell
-py -3.13 -m venv .venv-chainlit
-.\.venv-chainlit\Scripts\Activate.ps1
-pip install -r requirements.txt
-$env:SESSION_BACKEND="memory"
-chainlit run src/ui/chainlit_app.py -w
-```
-
-Useful UI prompts:
-
-```text
-Where is my order ORD-001?
-Show me PRD-101.
-Compare Galaxy A55 and Redmi Note 13 Pro for battery and camera.
-My phone order ORD-001 was delayed. Check the order status and suggest an alternative phone that is currently in stock.
-Show me how you made this answer.
-```
-
-What Chainlit adds:
-
-- Orchestrator delegation and specialist tool calls appear as expandable steps.
-- Order, product, and inventory tool outputs render as structured cards.
-- Sales prompts can show budget buttons such as `Under INR 15000`.
-- Chainlit session state remembers current order ID, product ID, and budget
-  preference for follow-up turns.
 
 ## FastMCP Backend
 
@@ -323,15 +266,12 @@ ecombot/
 |   |-- check_gateway_routes.py      # Route/debug helper
 |   `-- check_mcp_backend.py         # MCP backend/debug helper
 |-- src/
-|   |-- agents/orchestrator_agent.py # Primary ADK Web agent and delegation tools
-|   |-- agents/support_agent.py      # Support specialist and support tools
-|   |-- agents/sales_agent.py        # Sales specialist and product/inventory tools
+|   |-- agents/support_agent.py      # Main ADK agent and tool registration
 |   |-- config/settings.py           # Environment-driven settings
 |   |-- gateway/                     # Route classification and model resolver
 |   |-- rag/                         # ChromaDB indexing and retrieval
 |   |-- services/                    # DB, Redis, sessions, FastMCP server
-|   |-- tools/                       # In-process tools and MCP toolset factory
-|   `-- ui/chainlit_app.py           # Chainlit browser UI adapter
+|   `-- tools/                       # In-process tools and MCP toolset factory
 |-- tests/                           # Manual validation guides
 `-- docs/                            # Architecture and learning guides
 ```
