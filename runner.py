@@ -1,4 +1,4 @@
-"""Console runner for the eComBot support agent.
+"""Console runner for eComBot.
 
 Run from this directory:
     python runner.py --scenario
@@ -25,7 +25,7 @@ from src.services.session_service import get_session_service, make_runner
 load_dotenv(ROOT_DIR / ".env")
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
-DAY04_SCENARIO = [
+SUPPORT_TOOLS_SCENARIO = [
     "Hi, my name is Priya.",
     "Where is my order ORD-001?",
     "What about that same order?",
@@ -43,21 +43,31 @@ KNOWLEDGE_RAG_SCENARIO = [
     "Do you sell refrigerator compressors?",
 ]
 
+MULTI_AGENT_SCENARIO = [
+    "Where is my order ORD-001?",
+    "Compare Galaxy A55 and Redmi Note 13 Pro for battery, camera, and warranty.",
+    (
+        "My phone order ORD-001 was delayed. Check the order status and also "
+        "suggest an alternative phone that is currently in stock."
+    ),
+    "What can you help me with as a shopping assistant?",
+]
+
 BLOCKED_PROXY_VALUES = {"http://127.0.0.1:9", "https://127.0.0.1:9"}
 
 
 def _load_root_agent():
     """Import the agent only after environment preflight checks pass."""
-    from src.agents.support_agent import root_agent
+    from src.agents.orchestrator_agent import root_agent
 
     return root_agent
 
 
 def _load_agent_for_route(route: str):
-    """Import the route-specific support agent after preflight checks pass."""
-    from src.agents.support_agent import get_agent_for_route
+    """Import the route-specific orchestrator after preflight checks pass."""
+    from src.agents.orchestrator_agent import get_orchestrator_for_route
 
-    return get_agent_for_route(route)
+    return get_orchestrator_for_route(route)
 
 
 def _message(text: str) -> types.Content:
@@ -76,6 +86,15 @@ async def ask(
     response_text = ""
     tool_calls: list[dict] = []
     tool_results: list[dict] = []
+    specialist_trace = None
+
+    try:
+        from src.agents.orchestrator_agent import delegation_trace
+
+        delegation_trace.clear()
+        specialist_trace = delegation_trace
+    except Exception:
+        specialist_trace = None
 
     async for event in runner.run_async(
         user_id=user_id,
@@ -120,8 +139,23 @@ async def ask(
             print(f"Tool call:   {call['name']}({call['args']})")
         for result in tool_results:
             print(f"Tool result: {result['name']} -> {result['response']}")
+        if specialist_trace is not None:
+            for step in specialist_trace:
+                if step["type"] == "call":
+                    print(
+                        f"Specialist call:   {step['agent']} -> "
+                        f"{step['tool']}({step['args']})"
+                    )
+                else:
+                    print(
+                        f"Specialist result: {step['agent']} -> "
+                        f"{step['tool']} -> {step['response']}"
+                    )
         if tool_calls or tool_results:
             print()
+
+    if specialist_trace is not None:
+        specialist_trace.clear()
 
     try:
         session = await runner.session_service.get_session(
@@ -184,7 +218,7 @@ async def run_prompts(
         runner, decision = await _runner_for_prompt(question)
         resolved_model = model_for_route(decision.route)
         print(
-            f"Route: {decision.route} "
+            f"Model route: {decision.route} "
             f"({decision.reason}; model={resolved_model.model})"
         )
         print(f"User : {question}\n")
@@ -245,7 +279,7 @@ async def run_repl(
         runner, decision = await _runner_for_prompt(prompt)
         resolved_model = model_for_route(decision.route)
         print(
-            f"\nRoute: {decision.route} "
+            f"\nModel route: {decision.route} "
             f"({decision.reason}; model={resolved_model.model})"
         )
         reply = await ask(
@@ -318,13 +352,22 @@ def _has_blocked_proxy() -> list[str]:
 async def main() -> None:
     parser = argparse.ArgumentParser(description="Run eComBot locally.")
     parser.add_argument("prompts", nargs="*", help="Prompts to run in one session.")
-    parser.add_argument("--scenario", action="store_true", help="Run Day 04 scenario.")
+    parser.add_argument(
+        "--scenario",
+        action="store_true",
+        help="Run the support tools scenario.",
+    )
     parser.add_argument(
         "--rag-scenario",
         action="store_true",
         help="Run a knowledge-grounding scenario.",
     )
     parser.add_argument("--repl", action="store_true", help="Start an interactive REPL.")
+    parser.add_argument(
+        "--multi-agent-scenario",
+        action="store_true",
+        help="Run support, sales, mixed, and direct-answer orchestration checks.",
+    )
     parser.add_argument("--user-id", help="Reuse a specific ADK user_id.")
     parser.add_argument("--session-id", help="Reuse a specific ADK session_id.")
     parser.add_argument("--history", help="Print durable history for a session_id.")
@@ -399,9 +442,17 @@ async def main() -> None:
                 route_mode=args.route,
                 trace_tools=args.trace_tools,
             )
+        elif args.multi_agent_scenario:
+            await run_prompts(
+                MULTI_AGENT_SCENARIO,
+                user_id=args.user_id,
+                session_id=args.session_id,
+                route_mode=args.route,
+                trace_tools=True,
+            )
         elif args.scenario:
             await run_prompts(
-                DAY04_SCENARIO,
+                SUPPORT_TOOLS_SCENARIO,
                 user_id=args.user_id,
                 session_id=args.session_id,
                 route_mode=args.route,

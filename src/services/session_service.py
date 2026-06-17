@@ -1,4 +1,4 @@
-"""ADK Runner/session factory for eComBot Day 04."""
+"""ADK Runner/session factory for eComBot."""
 
 import logging
 import importlib.util

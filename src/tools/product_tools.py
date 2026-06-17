@@ -1,4 +1,4 @@
-"""PostgreSQL-backed product tools for eComBot Day 04."""
+"""PostgreSQL-backed product tools for eComBot."""
 
 import logging
 import re

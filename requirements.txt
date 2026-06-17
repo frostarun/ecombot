@@ -16,3 +16,6 @@ pytest==8.3.5; python_version < "3.14"
 adk-extra-services==0.1.7
 chromadb>=1.5.9,<1.6
 pypdf>=6.12.2,<7
+# Chainlit currently supports Python >=3.10,<3.14.
+# The repo Python 3.14 venv can run the backend but cannot install Chainlit.
+chainlit>=2.11.1,<3; python_version < "3.14"

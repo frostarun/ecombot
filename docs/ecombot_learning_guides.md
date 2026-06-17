@@ -12,6 +12,8 @@ separate from day-to-day developer commands.
 | Day 06 | [ecombot_day06_pdf_rag_knowledgebase.md](ecombot_day06_pdf_rag_knowledgebase.md) | PDF extraction, chunking, metadata, grounded citations. |
 | Day 07 | [ecombot_day07_gateway_knowledgebase.md](ecombot_day07_gateway_knowledgebase.md) | LiteLLM gateway routing and proxy fallback. |
 | Day 08 | [ecombot_day08_mcp_knowledgebase.md](ecombot_day08_mcp_knowledgebase.md) | FastMCP external order and inventory tools. |
+| Day 09 | [ecombot_day09_orchestration_knowledgebase.md](ecombot_day09_orchestration_knowledgebase.md) | Multi-agent orchestration with Support and Sales specialists. |
+| Day 10 | [ecombot_day10_chainlit_knowledgebase.md](ecombot_day10_chainlit_knowledgebase.md) | Chainlit UI with steps, cards, actions, and session context. |
 
 ## Source Lab Guides
 

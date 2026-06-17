@@ -1,4 +1,4 @@
-"""Durable conversation history service for eComBot Day 04."""
+"""Durable conversation history service for eComBot."""
 
 import json
 import logging

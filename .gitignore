@@ -6,6 +6,7 @@
 # ADK and local vector/runtime state
 .adk/
 .chroma/
+.chainlit/
 
 # Python caches and build output
 __pycache__/
